@@ -1,0 +1,13 @@
+{
+  "name": "com.fungus.core",
+  "version": "3.12.0",
+  "displayName": "Fungus",
+  "description": "Modified version of fungus branched from v3.12.0",
+  "unity": "2020.1",
+  "unityRelease": "2f1",
+  "author": {
+    "name": "Chris Gregan",
+    "email": "chris@snozbot.com",
+    "url": "http://fungusgames.com"
+  }
+}
