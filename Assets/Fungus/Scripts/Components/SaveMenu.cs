@@ -52,7 +52,7 @@ namespace Fungus
 
         protected static bool saveMenuActive = false;
 
-        protected AudioSource clickAudioSource;
+        protected FungusAudioSource clickAudioSource;
 
         protected LTDescr fadeTween;
 
@@ -80,7 +80,7 @@ namespace Fungus
                 Debug.LogError("Save Menu cannot be preserved across scene loads if it is a child of another GameObject.");
             }
 
-            clickAudioSource = GetComponent<AudioSource>();
+            clickAudioSource = GetComponent<FungusAudioSource>();
         }
 
         protected virtual void Start()

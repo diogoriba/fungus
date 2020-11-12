@@ -461,7 +461,7 @@ namespace Fungus
         /// <param name="stopVoiceover">Stop any existing voiceover audio before writing starts.</param>
         /// <param name="voiceOverClip">Voice over audio clip to play.</param>
         /// <param name="onComplete">Callback to execute when writing and player input have finished.</param>
-        public virtual void Say(string text, bool clearPrevious, bool waitForInput, bool fadeWhenDone, bool stopVoiceover, bool waitForVO, AudioClip voiceOverClip, Action onComplete)
+        public virtual void Say(string text, bool clearPrevious, bool waitForInput, bool fadeWhenDone, bool stopVoiceover, bool waitForVO, FungusAudioClip voiceOverClip, Action onComplete)
         {
             StartCoroutine(DoSay(text, clearPrevious, waitForInput, fadeWhenDone, stopVoiceover, waitForVO, voiceOverClip, onComplete));
         }
@@ -476,7 +476,7 @@ namespace Fungus
         /// <param name="stopVoiceover">Stop any existing voiceover audio before writing starts.</param>
         /// <param name="voiceOverClip">Voice over audio clip to play.</param>
         /// <param name="onComplete">Callback to execute when writing and player input have finished.</param>
-        public virtual IEnumerator DoSay(string text, bool clearPrevious, bool waitForInput, bool fadeWhenDone, bool stopVoiceover, bool waitForVO, AudioClip voiceOverClip, Action onComplete)
+        public virtual IEnumerator DoSay(string text, bool clearPrevious, bool waitForInput, bool fadeWhenDone, bool stopVoiceover, bool waitForVO, FungusAudioClip voiceOverClip, Action onComplete)
         {
             var writer = GetWriter();
 
@@ -506,7 +506,7 @@ namespace Fungus
 
             // Voice over clip takes precedence over a character sound effect if provided
 
-            AudioClip soundEffectClip = null;
+            FungusAudioClip soundEffectClip = null;
             if (voiceOverClip != null)
             {
                 WriterAudio writerAudio = GetWriterAudio();

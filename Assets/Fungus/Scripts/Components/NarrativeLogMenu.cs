@@ -30,7 +30,7 @@ namespace Fungus
 
         protected static bool narrativeLogActive = false;
         
-        protected AudioSource clickAudioSource;
+        protected FungusAudioSource clickAudioSource;
 
         protected LTDescr fadeTween;
 
@@ -51,7 +51,7 @@ namespace Fungus
 
                 GameObject.DontDestroyOnLoad(this);
 
-                clickAudioSource = GetComponent<AudioSource>();
+                clickAudioSource = GetComponent<FungusAudioSource>();
             }
             else
             {

@@ -15,7 +15,7 @@ namespace Fungus
     public class PlayMusic : Command
     {
         [Tooltip("Music sound clip to play")]
-        [SerializeField] protected AudioClip musicClip;
+        [SerializeField] protected FungusAudioClip musicClip;
 
         [Tooltip("Time to begin playing in seconds. If the audio file is compressed, the time index may be inaccurate.")]
         [SerializeField] protected float atTime;

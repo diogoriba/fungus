@@ -12,22 +12,22 @@ namespace Fungus
     //[RequireComponent(typeof(AudioSource))]
     public class MusicManager : MonoBehaviour
     {
-        protected AudioSource audioSourceMusic;
-        protected AudioSource audioSourceAmbiance;
-        protected AudioSource audioSourceSoundEffect;
+        protected FungusAudioSource audioSourceMusic;
+        protected FungusAudioSource audioSourceAmbiance;
+        protected FungusAudioSource audioSourceSoundEffect;
 
         void Reset()
         {
-            int audioSourceCount = this.GetComponents<AudioSource>().Length;
+            int audioSourceCount = this.GetComponents<FungusAudioSource>().Length;
             for (int i = 0; i < 3 - audioSourceCount; i++)
-                gameObject.AddComponent<AudioSource>();
+                gameObject.AddComponent<FungusAudioSource>();
 
         }
 
         protected virtual void Awake()
         {
             Reset();
-            AudioSource[] audioSources = GetComponents<AudioSource>();
+            FungusAudioSource[] audioSources = GetComponents<FungusAudioSource>();
             audioSourceMusic = audioSources[0];
             audioSourceAmbiance = audioSources[1];
             audioSourceSoundEffect = audioSources[2];
@@ -45,7 +45,7 @@ namespace Fungus
         /// Plays game music using an audio clip.
         /// One music clip may be played at a time.
         /// </summary>
-        public void PlayMusic(AudioClip musicClip, bool loop, float fadeDuration, float atTime)
+        public void PlayMusic(FungusAudioClip musicClip, bool loop, float fadeDuration, float atTime)
         {
             if (audioSourceMusic == null || audioSourceMusic.clip == musicClip)
             {
@@ -83,7 +83,7 @@ namespace Fungus
         /// </summary>
         /// <param name="soundClip">The sound effect clip to play.</param>
         /// <param name="volume">The volume level of the sound effect.</param>
-        public virtual void PlaySound(AudioClip soundClip, float volume)
+        public virtual void PlaySound(FungusAudioClip soundClip, float volume)
         {
             audioSourceSoundEffect.PlayOneShot(soundClip, volume);
         }
@@ -94,7 +94,7 @@ namespace Fungus
         /// <param name="soundClip">The sound effect clip to play.</param>
         /// <param name="loop">If the audioclip should loop or not.</param>
         /// <param name="volume">The volume level of the sound effect.</param>
-        public virtual void PlayAmbianceSound(AudioClip soundClip, bool loop, float volume)
+        public virtual void PlayAmbianceSound(FungusAudioClip soundClip, bool loop, float volume)
         {
             audioSourceAmbiance.loop = loop;
             audioSourceAmbiance.clip = soundClip;

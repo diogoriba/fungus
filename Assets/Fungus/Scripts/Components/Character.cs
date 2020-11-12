@@ -21,7 +21,7 @@ namespace Fungus
         [SerializeField] protected Color nameColor = Color.white;
 
         [Tooltip("Sound effect to play when this character is speaking.")]
-        [SerializeField] protected AudioClip soundEffect;
+        [SerializeField] protected FungusAudioClip soundEffect;
 
         [Tooltip("List of portrait images that can be displayed for this character.")]
         [SerializeField] protected List<Sprite> portraits;
@@ -74,7 +74,7 @@ namespace Fungus
         /// Sound effect to play when this character is speaking.
         /// </summary>
         /// <value>The sound effect.</value>
-        public virtual AudioClip SoundEffect { get { return soundEffect; } }
+        public virtual FungusAudioClip SoundEffect { get { return soundEffect; } }
 
         /// <summary>
         /// List of portrait images that can be displayed for this character.

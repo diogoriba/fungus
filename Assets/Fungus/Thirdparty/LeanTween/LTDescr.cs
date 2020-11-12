@@ -1,4 +1,5 @@
 //namespace DentedPixel{
+using Fungus;
 using System;
 using UnityEngine;
 
@@ -999,7 +1000,8 @@ public class LTDescr
 			this._optional.ltRect.rotateFinished = true;
 
 		if(this.type==TweenAction.DELAYED_SOUND){
-			AudioSource.PlayClipAtPoint((AudioClip)this._optional.onCompleteParam, this.to, this.from.x);
+			throw new FungusAbstractionNotImplementedException();
+			//FungusAudioSource.PlayClipAtPoint((FungusAudioClip)this._optional.onCompleteParam, this.to, this.from.x);
 		}
 		if(this._optional.onComplete!=null){
 			this._optional.onComplete();

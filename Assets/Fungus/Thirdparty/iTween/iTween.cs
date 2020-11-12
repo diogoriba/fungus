@@ -80,7 +80,7 @@ public class iTween : MonoBehaviour{
 	private delegate void ApplyTween();
 	private EasingFunction ease;
 	private ApplyTween apply;
-	private AudioSource audioSource;
+	private FungusAudioSource audioSource;
 	private Vector3[] vector3s;
 	private Vector2[] vector2s;
 	private Color[,] colors;
@@ -859,10 +859,10 @@ public class iTween : MonoBehaviour{
 	}	
 	
 	/// <summary>
-	/// Instantly changes an AudioSource's volume and pitch then returns it to it's starting volume and pitch over time with MINIMUM customization options. Default AudioSource attached to GameObject will be used (if one exists) if not supplied.
+	/// Instantly changes an FungusAudioSource's volume and pitch then returns it to it's starting volume and pitch over time with MINIMUM customization options. Default FungusAudioSource attached to GameObject will be used (if one exists) if not supplied.
 	/// </summary>
 	/// <param name="target"> 
-	/// A <see cref="GameObject"/> to be the target of the animation which holds the AudioSource to be changed.
+	/// A <see cref="GameObject"/> to be the target of the animation which holds the FungusAudioSource to be changed.
 	/// </param>
 	/// <param name="volume"> for the target level of volume.
 	/// A <see cref="System.Single"/>
@@ -878,10 +878,10 @@ public class iTween : MonoBehaviour{
 	}
 	
 	/// <summary>
-	/// Instantly changes an AudioSource's volume and pitch then returns it to it's starting volume and pitch over time with FULL customization options. Default AudioSource attached to GameObject will be used (if one exists) if not supplied. 
+	/// Instantly changes an FungusAudioSource's volume and pitch then returns it to it's starting volume and pitch over time with FULL customization options. Default FungusAudioSource attached to GameObject will be used (if one exists) if not supplied. 
 	/// </summary>
 	/// <param name="audiosource">
-	/// A <see cref="AudioSource"/> for which AudioSource to use.
+	/// A <see cref="FungusAudioSource"/> for which FungusAudioSource to use.
 	/// </param> 
 	/// <param name="volume">
 	/// A <see cref="System.Single"/> or <see cref="System.Double"/> for the target level of volume.
@@ -931,27 +931,27 @@ public class iTween : MonoBehaviour{
 	public static void AudioFrom(GameObject target, Hashtable args){
 		Vector2 tempAudioProperties;
 		Vector2 fromAudioProperties;
-		AudioSource tempAudioSource;
+		FungusAudioSource tempFungusAudioSource;
 		
 		//clean args:
 		args = iTween.CleanArgs(args);
 		
-		//set tempAudioSource:
+		//set tempFungusAudioSource:
 		if(args.Contains("audiosource")){
-			tempAudioSource=(AudioSource)args["audiosource"];
+			tempFungusAudioSource=(FungusAudioSource)args["audiosource"];
 		}else{
-			if(target.GetComponent<AudioSource>()){
-				tempAudioSource=target.GetComponent<AudioSource>();
+			if(target.GetComponent<FungusAudioSource>()){
+				tempFungusAudioSource=target.GetComponent<FungusAudioSource>();
 			}else{
-				//throw error if no AudioSource is available:
-				Debug.LogError("iTween Error: AudioFrom requires an AudioSource.");
+				//throw error if no FungusAudioSource is available:
+				Debug.LogError("iTween Error: AudioFrom requires an FungusAudioSource.");
 				return;
 			}
 		}			
 		
 		//set tempAudioProperties:
-		tempAudioProperties.x=fromAudioProperties.x=tempAudioSource.volume;
-		tempAudioProperties.y=fromAudioProperties.y=tempAudioSource.pitch;
+		tempAudioProperties.x=fromAudioProperties.x=tempFungusAudioSource.volume;
+		tempAudioProperties.y=fromAudioProperties.y=tempFungusAudioSource.pitch;
 		
 		//set augmented fromAudioProperties:
 		if(args.Contains("volume")){
@@ -962,8 +962,8 @@ public class iTween : MonoBehaviour{
 		}
 		
 		//apply fromAudioProperties:
-		tempAudioSource.volume=fromAudioProperties.x;
-		tempAudioSource.pitch=fromAudioProperties.y;
+		tempFungusAudioSource.volume=fromAudioProperties.x;
+		tempFungusAudioSource.pitch=fromAudioProperties.y;
 				
 		//set new volume and pitch args:
 		args["volume"]=tempAudioProperties.x;
@@ -981,10 +981,10 @@ public class iTween : MonoBehaviour{
 	}		
 
 	/// <summary>
-	/// Fades volume and pitch of an AudioSource with MINIMUM customization options.  Default AudioSource attached to GameObject will be used (if one exists) if not supplied. 
+	/// Fades volume and pitch of an FungusAudioSource with MINIMUM customization options.  Default FungusAudioSource attached to GameObject will be used (if one exists) if not supplied. 
 	/// </summary>
 	/// <param name="target"> 
-	/// A <see cref="GameObject"/> to be the target of the animation which holds the AudioSource to be changed.
+	/// A <see cref="GameObject"/> to be the target of the animation which holds the FungusAudioSource to be changed.
 	/// </param>
 	/// <param name="volume"> for the target level of volume.
 	/// A <see cref="System.Single"/>
@@ -1000,10 +1000,10 @@ public class iTween : MonoBehaviour{
 	}
 	
 	/// <summary>
-	/// Fades volume and pitch of an AudioSource with FULL customization options.  Default AudioSource attached to GameObject will be used (if one exists) if not supplied. 
+	/// Fades volume and pitch of an FungusAudioSource with FULL customization options.  Default FungusAudioSource attached to GameObject will be used (if one exists) if not supplied. 
 	/// </summary>
 	/// <param name="audiosource">
-	/// A <see cref="AudioSource"/> for which AudioSource to use.
+	/// A <see cref="FungusAudioSource"/> for which FungusAudioSource to use.
 	/// </param> 
 	/// <param name="volume">
 	/// A <see cref="System.Single"/> or <see cref="System.Double"/> for the target level of volume.
@@ -1066,10 +1066,10 @@ public class iTween : MonoBehaviour{
 	}	
 	
 	/// <summary>
-	/// Plays an AudioClip once based on supplied volume and pitch and following any delay with MINIMUM customization options. AudioSource is optional as iTween will provide one.
+	/// Plays an AudioClip once based on supplied volume and pitch and following any delay with MINIMUM customization options. FungusAudioSource is optional as iTween will provide one.
 	/// </summary>
 	/// <param name="target">
-	/// A <see cref="GameObject"/> to be the target of the animation which holds the AudioSource to be utilized.
+	/// A <see cref="GameObject"/> to be the target of the animation which holds the FungusAudioSource to be utilized.
 	/// </param>
 	/// <param name="audioclip">
 	/// A <see cref="AudioClip"/> for a reference to the AudioClip to be played.
@@ -1077,18 +1077,18 @@ public class iTween : MonoBehaviour{
 	/// <param name="delay">
 	/// A <see cref="System.Single"/> for the time in seconds the action will wait before beginning.
 	/// </param>
-	public static void Stab(GameObject target, AudioClip audioclip, float delay){
+	public static void Stab(GameObject target, FungusAudioClip audioclip, float delay){
 		Stab(target,Hash("audioclip",audioclip,"delay",delay));
 	}
 	
 	/// <summary>
-	/// Plays an AudioClip once based on supplied volume and pitch and following any delay with FULL customization options. AudioSource is optional as iTween will provide one.
+	/// Plays an AudioClip once based on supplied volume and pitch and following any delay with FULL customization options. FungusAudioSource is optional as iTween will provide one.
 	/// </summary>
 	/// <param name="audioclip">
 	/// A <see cref="AudioClip"/> for a reference to the AudioClip to be played.
 	/// </param> 
 	/// <param name="audiosource">
-	/// A <see cref="AudioSource"/> for which AudioSource to use
+	/// A <see cref="FungusAudioSource"/> for which FungusAudioSource to use
 	/// </param> 
 	/// <param name="volume">
 	/// A <see cref="System.Single"/> or <see cref="System.Double"/> for the target level of volume.
@@ -3392,13 +3392,13 @@ public class iTween : MonoBehaviour{
 		
 		//set audioSource:
 		if(tweenArguments.Contains("audiosource")){
-			audioSource=(AudioSource)tweenArguments["audiosource"];
+			audioSource=(FungusAudioSource)tweenArguments["audiosource"];
 		}else{
-			if(GetComponent<AudioSource>()){
-				audioSource=GetComponent<AudioSource>();
+			if(GetComponent<FungusAudioSource>()){
+				audioSource=GetComponent<FungusAudioSource>();
 			}else{
-				//throw error if no AudioSource is available:
-				Debug.LogError("iTween Error: AudioTo requires an AudioSource.");
+				//throw error if no FungusAudioSource is available:
+				Debug.LogError("iTween Error: AudioTo requires an FungusAudioSource.");
 				Dispose();
 			}
 		}		
@@ -3418,21 +3418,21 @@ public class iTween : MonoBehaviour{
 	void GenerateStabTargets(){
 		//set audioSource:
 		if(tweenArguments.Contains("audiosource")){
-			audioSource=(AudioSource)tweenArguments["audiosource"];
+			audioSource=(FungusAudioSource)tweenArguments["audiosource"];
 		}else{
-			if(GetComponent<AudioSource>()){
-				audioSource=GetComponent<AudioSource>();
+			if(GetComponent<FungusAudioSource>()){
+				audioSource=GetComponent<FungusAudioSource>();
 			}else{
-				//add and populate AudioSource if one doesn't exist:
-				gameObject.AddComponent<AudioSource>();
-				audioSource=GetComponent<AudioSource>();
+				//add and populate FungusAudioSource if one doesn't exist:
+				gameObject.AddComponent<FungusAudioSource>();
+				audioSource=GetComponent<FungusAudioSource>();
 				audioSource.playOnAwake=false;
 				
 			}
 		}
 		
 		//populate audioSource's clip:
-		audioSource.clip=(AudioClip)tweenArguments["audioclip"];
+		audioSource.clip=(FungusAudioClip)tweenArguments["audioclip"];
 		
 		//set audio's pitch and volume if requested:
 		if(tweenArguments.Contains("pitch")){
@@ -4887,7 +4887,7 @@ public class iTween : MonoBehaviour{
 	/// Similar to AudioTo but incredibly less expensive for usage inside the Update function or similar looping situations involving a "live" set of changing values with FULL customization options. Does not utilize an EaseType. 
 	/// </summary>
 	/// <param name="audiosource">
-	/// A <see cref="AudioSource"/> for which AudioSource to use.
+	/// A <see cref="FungusAudioSource"/> for which FungusAudioSource to use.
 	/// </param> 
 	/// <param name="volume">
 	/// A <see cref="System.Single"/> or <see cref="System.Double"/> for the target level of volume.
@@ -4901,7 +4901,7 @@ public class iTween : MonoBehaviour{
 	public static void AudioUpdate(GameObject target, Hashtable args){
 		CleanArgs(args);
 		
-		AudioSource audioSource;
+		FungusAudioSource audioSource;
 		float time;
 		Vector2[] vector2s = new Vector2[4];
 			
@@ -4915,13 +4915,13 @@ public class iTween : MonoBehaviour{
 
 		//set audioSource:
 		if(args.Contains("audiosource")){
-			audioSource=(AudioSource)args["audiosource"];
+			audioSource=(FungusAudioSource)args["audiosource"];
 		}else{
-			if(target.GetComponent<AudioSource>()){
-				audioSource=target.GetComponent<AudioSource>();
+			if(target.GetComponent<FungusAudioSource>()){
+				audioSource=target.GetComponent<FungusAudioSource>();
 			}else{
-				//throw error if no AudioSource is available:
-				Debug.LogError("iTween Error: AudioUpdate requires an AudioSource.");
+				//throw error if no FungusAudioSource is available:
+				Debug.LogError("iTween Error: AudioUpdate requires an FungusAudioSource.");
 				return;
 			}
 		}		

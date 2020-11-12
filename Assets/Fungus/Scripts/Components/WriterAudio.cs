@@ -31,19 +31,19 @@ namespace Fungus
 
         // If none is specifed then we use any AudioSource on the gameobject, and if that doesn't exist we create one.
         [Tooltip("AudioSource to use for playing sound effects. If none is selected then one will be created.")]
-        [SerializeField] protected AudioSource targetAudioSource;
+        [SerializeField] protected FungusAudioSource targetAudioSource;
 
         [Tooltip("Type of sound effect to play when writing text")]
         [SerializeField] protected AudioMode audioMode = AudioMode.Beeps;
 
         [Tooltip("List of beeps to randomly select when playing beep sound effects. Will play maximum of one beep per character, with only one beep playing at a time.")]
-        [SerializeField] protected List<AudioClip> beepSounds = new List<AudioClip>();
+        [SerializeField] protected List<FungusAudioClip> beepSounds = new List<FungusAudioClip>();
 
         [Tooltip("Long playing sound effect to play when writing text")]
-        [SerializeField] protected AudioClip soundEffect;
+        [SerializeField] protected FungusAudioClip soundEffect;
 
         [Tooltip("Sound effect to play on user input (e.g. a click)")]
-        [SerializeField] protected AudioClip inputSound;
+        [SerializeField] protected FungusAudioClip inputSound;
 
         protected float targetVolume = 0f;
 
@@ -81,17 +81,17 @@ namespace Fungus
             // Need to do this in Awake rather than Start due to init order issues
             if (targetAudioSource == null)
             {
-                targetAudioSource = GetComponent<AudioSource>();
+                targetAudioSource = GetComponent<FungusAudioSource>();
                 if (targetAudioSource == null)
                 {
-                    targetAudioSource = gameObject.AddComponent<AudioSource>();
+                    targetAudioSource = gameObject.AddComponent<FungusAudioSource>();
                 }
             }
 
             targetAudioSource.volume = 0f;
         }
 
-        protected virtual void Play(AudioClip audioClip)
+        protected virtual void Play(FungusAudioClip audioClip)
         {
             if (targetAudioSource == null ||
                 (audioMode == AudioMode.SoundEffect && soundEffect == null && audioClip == null) ||
@@ -176,11 +176,11 @@ namespace Fungus
             if (inputSound != null)
             {
                 // Assumes we're playing a 2D sound
-                AudioSource.PlayClipAtPoint(inputSound, Vector3.zero);
+                targetAudioSource.PlayClipAtPoint(inputSound, Vector3.zero);
             }
         }
 
-        public virtual void OnStart(AudioClip audioClip)
+        public virtual void OnStart(FungusAudioClip audioClip)
         {
             if (playingVoiceover)
             {
@@ -244,7 +244,7 @@ namespace Fungus
             }
         }
 
-        public virtual void OnVoiceover(AudioClip voiceOverClip)
+        public virtual void OnVoiceover(FungusAudioClip voiceOverClip)
         {
             if (targetAudioSource == null)
             {

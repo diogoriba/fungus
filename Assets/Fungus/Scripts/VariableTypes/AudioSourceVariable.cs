@@ -11,12 +11,12 @@ namespace Fungus
     [VariableInfo("Other", "AudioSource")]
     [AddComponentMenu("")]
     [System.Serializable]
-    public class AudioSourceVariable : VariableBase<AudioSource>
+    public class AudioSourceVariable : VariableBase<FungusAudioSource>
     {
         public static readonly CompareOperator[] compareOperators = { CompareOperator.Equals, CompareOperator.NotEquals };
         public static readonly SetOperator[] setOperators = { SetOperator.Assign };
 
-        public virtual bool Evaluate(CompareOperator compareOperator, AudioSource value)
+        public virtual bool Evaluate(CompareOperator compareOperator, FungusAudioSource value)
         {
             bool condition = false;
 
@@ -36,7 +36,7 @@ namespace Fungus
             return condition;
         }
 
-        public override void Apply(SetOperator setOperator, AudioSource value)
+        public override void Apply(SetOperator setOperator, FungusAudioSource value)
         {
             switch (setOperator)
             {
@@ -61,20 +61,20 @@ namespace Fungus
         public AudioSourceVariable audioSourceRef;
         
         [SerializeField]
-        public AudioSource audioSourceVal;
+        public FungusAudioSource audioSourceVal;
 
-        public static implicit operator AudioSource(AudioSourceData audioSourceData)
+        public static implicit operator FungusAudioSource(AudioSourceData audioSourceData)
         {
             return audioSourceData.Value;
         }
 
-        public AudioSourceData(AudioSource v)
+        public AudioSourceData(FungusAudioSource v)
         {
             audioSourceVal = v;
             audioSourceRef = null;
         }
 
-        public AudioSource Value
+        public FungusAudioSource Value
         {
             get { return (audioSourceRef == null) ? audioSourceVal : audioSourceRef.Value; }
             set { if (audioSourceRef == null) { audioSourceVal = value; } else { audioSourceRef.Value = value; } }

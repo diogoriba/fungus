@@ -20,7 +20,7 @@ namespace Fungus
         /// Called when the Writer starts writing new text.
         /// </summary>
         /// <param name="audioClip">An optional audioClip sound effect can be supplied (e.g. for voiceover)</param>
-        void OnStart(AudioClip audioClip);
+        void OnStart(FungusAudioClip audioClip);
 
         /// Called when the Writer has paused writing text (e.g. on a {wi} tag).
         void OnPause();
@@ -38,6 +38,6 @@ namespace Fungus
         /// <summary>
         /// Called when voiceover should start.
         /// </summary>
-        void OnVoiceover(AudioClip voiceOverClip);
+        void OnVoiceover(FungusAudioClip voiceOverClip);
     }
 }

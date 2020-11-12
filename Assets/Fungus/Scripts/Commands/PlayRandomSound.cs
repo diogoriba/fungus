@@ -16,7 +16,7 @@ namespace Fungus
     {
         [Tooltip("Sound effect clip to play")]
         [SerializeField]
-        protected AudioClip[] soundClip;
+        protected FungusAudioClip[] soundClip;
 
         [Range(0, 1)]
         [Tooltip("Volume level of the sound effect")]
@@ -65,7 +65,7 @@ namespace Fungus
             }
             
             string sounds = "[";
-            foreach (AudioClip ac in soundClip) {
+            foreach (var ac in soundClip) {
 				if(ac!=null)
 					sounds+=ac.name+" ,";
             }

@@ -144,6 +144,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 using UnityEngine;
 using System;
 using System.Collections.Generic;
+using Fungus;
 
 public enum TweenAction{
     MOVE_X,
@@ -1861,12 +1862,12 @@ public class LeanTween : MonoBehaviour {
         return pushNewTween( gameObject, new Vector3(to,0,0), time, options().setCallback().setTo( new Vector3(to,0,0) ).setFrom( new Vector3(from,0,0) ).setOnUpdate(callOnUpdate, gameObject) );
     }
 
-    public static LTDescr delayedSound( AudioClip audio, Vector3 pos, float volume ){
+    public static LTDescr delayedSound( FungusAudioClip audio, Vector3 pos, float volume ){
         //Debug.LogError("Delay sound??");
         return pushNewTween( tweenEmpty, pos, 0f, options().setDelayedSound().setTo( pos ).setFrom( new Vector3(volume,0,0) ).setAudio( audio ) );
     }
 
-    public static LTDescr delayedSound( GameObject gameObject, AudioClip audio, Vector3 pos, float volume ){
+    public static LTDescr delayedSound( GameObject gameObject, FungusAudioClip audio, Vector3 pos, float volume ){
         //Debug.LogError("Delay sound??");
         return pushNewTween( gameObject, pos, 0f, options().setDelayedSound().setTo( pos ).setFrom( new Vector3(volume,0,0) ).setAudio( audio ) );
     }

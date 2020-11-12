@@ -1,12 +1,13 @@
 
 using UnityEngine;
 using System.Collections.Generic;
+using Fungus;
 
 public class LeanAudioStream {
 
 	public int position = 0;
 
-	public AudioClip audioClip;
+	public FungusAudioClip audioClip;
 	public float[] audioArr;
 
 	public LeanAudioStream( float[] audioArr ){
@@ -55,7 +56,7 @@ public class LeanAudio : object {
 			options = new LeanAudioOptions();
 
 		options.useSetData = false;
-
+		
 		int generatedWavePtsLength = createAudioWave( volume, frequency, options);
 		createAudioFromWave( generatedWavePtsLength, options );
 
@@ -75,7 +76,7 @@ public class LeanAudio : object {
 	* AnimationCurve frequencyCurve = new AnimationCurve( new Keyframe(0f, 0.003f, 0f, 0f), new Keyframe(1f, 0.003f, 0f, 0f));<br>
 	* AudioClip audioClip = LeanAudio.createAudio(volumeCurve, frequencyCurve, LeanAudio.options().setVibrato( new Vector3[]{ new Vector3(0.32f,0f,0f)} ));<br>
 	*/
-	public static AudioClip createAudio( AnimationCurve volume, AnimationCurve frequency, LeanAudioOptions options = null ){
+	public static FungusAudioClip createAudio( AnimationCurve volume, AnimationCurve frequency, LeanAudioOptions options = null ){
 		if(options==null)
 			options = new LeanAudioOptions();
 		
@@ -145,7 +146,7 @@ public class LeanAudio : object {
 		return listLength;
 	}
 
-	private static AudioClip createAudioFromWave( int waveLength, LeanAudioOptions options ){
+	private static FungusAudioClip createAudioFromWave( int waveLength, LeanAudioOptions options ){
 		float time = longList[ waveLength - 2 ];
 		float[] audioArr = new float[ (int)(options.frequencyRate*time) ];
 
@@ -219,14 +220,14 @@ public class LeanAudio : object {
 		bool is3dSound = false;
 		AudioClip audioClip = AudioClip.Create("Generated Audio", lengthSamples, 1, options.frequencyRate, is3dSound, false);
 		#else
-		AudioClip audioClip = null;
+		FungusAudioClip audioClip = null;
 		if(options.useSetData){
-			audioClip = AudioClip.Create("Generated Audio", lengthSamples, 1, options.frequencyRate, false, null, OnAudioSetPosition);
+			audioClip = FungusAudioClip.Create("Generated Audio", lengthSamples, 1, options.frequencyRate, false, null, OnAudioSetPosition);
 			audioClip.SetData(audioArr, 0);
 		}else{
 			options.stream = new LeanAudioStream(audioArr);
 			// Debug.Log("len:"+audioArr.Length+" lengthSamples:"+lengthSamples+" freqRate:"+options.frequencyRate);
-			audioClip = AudioClip.Create("Generated Audio", lengthSamples, 1, options.frequencyRate, false, options.stream.OnAudioRead, options.stream.OnAudioSetPosition);
+			audioClip = FungusAudioClip.Create("Generated Audio", lengthSamples, 1, options.frequencyRate, false, options.stream.OnAudioRead, options.stream.OnAudioSetPosition);
 			options.stream.audioClip = audioClip;
 		}
 		
@@ -239,7 +240,7 @@ public class LeanAudio : object {
         
     }
 
-	public static AudioClip generateAudioFromCurve( AnimationCurve curve, int frequencyRate = 44100 ){
+	public static FungusAudioClip generateAudioFromCurve( AnimationCurve curve, int frequencyRate = 44100 ){
 		float curveTime = curve[ curve.length - 1 ].time;
 		float time = curveTime;
 		float[] audioArr = new float[ (int)(frequencyRate*time) ];
@@ -256,30 +257,30 @@ public class LeanAudio : object {
 		bool is3dSound = false;
 		AudioClip audioClip = AudioClip.Create("Generated Audio", lengthSamples, 1, frequencyRate, is3dSound, false);
 		#else
-		AudioClip audioClip = AudioClip.Create("Generated Audio", lengthSamples, 1, frequencyRate, false);
+		FungusAudioClip audioClip = FungusAudioClip.Create("Generated Audio", lengthSamples, 1, frequencyRate, false);
 		#endif
 		audioClip.SetData(audioArr, 0);
 
 		return audioClip;
 	}
 
-	public static AudioSource play( AudioClip audio, float volume ){
-		AudioSource audioSource = playClipAt(audio, Vector3.zero);
+	public static FungusAudioSource play( FungusAudioClip audio, float volume ){
+		FungusAudioSource audioSource = playClipAt(audio, Vector3.zero);
 		audioSource.volume = volume;
 		return audioSource; 
 	}
 
-	public static AudioSource play( AudioClip audio ){
+	public static FungusAudioSource play( FungusAudioClip audio ){
 		return playClipAt( audio, Vector3.zero ); 
 	}
 
-	public static AudioSource play( AudioClip audio, Vector3 pos ){
+	public static FungusAudioSource play(FungusAudioClip audio, Vector3 pos ){
 		return playClipAt( audio, pos ); 
 	}
 
-	public static AudioSource play( AudioClip audio, Vector3 pos, float volume ){
+	public static FungusAudioSource play(FungusAudioClip audio, Vector3 pos, float volume ){
 		// Debug.Log("audio length:"+audio.length);
-		AudioSource audioSource = playClipAt(audio, pos);
+		FungusAudioSource audioSource = playClipAt(audio, pos);
 		audioSource.minDistance = 1f;
 		//audioSource.pitch = pitch;
 		audioSource.volume = volume;
@@ -287,17 +288,17 @@ public class LeanAudio : object {
 		return audioSource;
 	}
 
-	public static AudioSource playClipAt( AudioClip clip, Vector3 pos ) {
+	public static FungusAudioSource playClipAt(FungusAudioClip clip, Vector3 pos ) {
 		GameObject tempGO = new GameObject(); // create the temp object
 		tempGO.transform.position = pos; // set its position
-		AudioSource aSource = tempGO.AddComponent<AudioSource>(); // add an audio source
+		FungusAudioSource aSource = tempGO.AddComponent<FungusAudioSource>(); // add an audio source
 		aSource.clip = clip; // define the clip
 		aSource.Play(); // start the sound
 		GameObject.Destroy(tempGO, clip.length); // destroy object after clip duration
 		return aSource; // return the AudioSource reference
 	}
 
-	public static void printOutAudioClip( AudioClip audioClip, ref AnimationCurve curve, float scaleX = 1f ){
+	public static void printOutAudioClip(FungusAudioClip audioClip, ref AnimationCurve curve, float scaleX = 1f ){
 		// Debug.Log("Audio channels:"+audioClip.channels+" frequency:"+audioClip.frequency+" length:"+audioClip.length+" samples:"+audioClip.samples);
 		float[] samples = new float[audioClip.samples * audioClip.channels];
         audioClip.GetData(samples, 0);

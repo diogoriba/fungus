@@ -65,7 +65,7 @@ namespace Fungus
                 return;
             }
 
-            var audioSources = GameObject.FindObjectsOfType<AudioSource>();
+            var audioSources = GameObject.FindObjectsOfType<FungusAudioSource>();
             for (int i = 0; i < audioSources.Length; i++)
             {
                 var a = audioSources[i];
@@ -117,7 +117,7 @@ namespace Fungus
             {
                 _audioSource.Value.volume = 0;
                 _audioSource.Value.loop = true;
-                _audioSource.Value.GetComponent<AudioSource>().Play();
+                _audioSource.Value.GetComponent<FungusAudioSource>().Play();
                 LeanTween.value(_audioSource.Value.gameObject,0,endVolume,fadeDuration
                 ).setOnUpdate(
                     (float updateVolume)=>{
@@ -136,7 +136,7 @@ namespace Fungus
             {
                 _audioSource.Value.volume = endVolume;
                 _audioSource.Value.loop = true;
-                _audioSource.Value.GetComponent<AudioSource>().Play();
+                _audioSource.Value.GetComponent<FungusAudioSource>().Play();
             }
         }
 
@@ -152,7 +152,7 @@ namespace Fungus
                 ).setOnComplete(
                     ()=>{
 
-                    _audioSource.Value.GetComponent<AudioSource>().Pause();
+                    _audioSource.Value.GetComponent<FungusAudioSource>().Pause();
                     if (waitUntilFinished)
                     {
                         Continue();
@@ -162,11 +162,11 @@ namespace Fungus
             }
             else
             {
-                _audioSource.Value.GetComponent<AudioSource>().Pause();
+                _audioSource.Value.GetComponent<FungusAudioSource>().Pause();
             }
         }
 
-        protected virtual void StopLoop(AudioSource source)
+        protected virtual void StopLoop(FungusAudioSource source)
         {
             if (fadeDuration > 0)
             {
@@ -178,7 +178,7 @@ namespace Fungus
                 ).setOnComplete(
                     ()=>{
 
-                    source.GetComponent<AudioSource>().Stop();
+                    source.GetComponent<FungusAudioSource>().Stop();
                     if (waitUntilFinished)
                     {
                         Continue();
@@ -188,7 +188,7 @@ namespace Fungus
             }
             else
             {
-                source.GetComponent<AudioSource>().Stop();
+                source.GetComponent<FungusAudioSource>().Stop();
             }
         }
 
@@ -293,7 +293,7 @@ namespace Fungus
 
         #region Backwards compatibility
 
-        [HideInInspector] [FormerlySerializedAs("audioSource")] public AudioSource audioSourceOLD;
+        [HideInInspector] [FormerlySerializedAs("audioSource")] public FungusAudioSource audioSourceOLD;
 
         protected virtual void OnEnable()
         {

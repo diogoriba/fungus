@@ -390,7 +390,7 @@ namespace Fungus
 
                 case TokenType.Audio: 
                     {
-                        AudioSource audioSource = null;
+                        FungusAudioSource audioSource = null;
                         if (CheckParamCount(token.paramList, 1))
                         {
                             audioSource = FindAudio(token.paramList[0]);
@@ -404,7 +404,7 @@ namespace Fungus
                     
                 case TokenType.AudioLoop:
                     {
-                        AudioSource audioSource = null;
+                        FungusAudioSource audioSource = null;
                         if (CheckParamCount(token.paramList, 1)) 
                         {
                             audioSource = FindAudio(token.paramList[0]);
@@ -419,7 +419,7 @@ namespace Fungus
                     
                 case TokenType.AudioPause:
                     {
-                        AudioSource audioSource = null;
+                        FungusAudioSource audioSource = null;
                         if (CheckParamCount(token.paramList, 1)) 
                         {
                             audioSource = FindAudio(token.paramList[0]);
@@ -433,7 +433,7 @@ namespace Fungus
                     
                 case TokenType.AudioStop:
                     {
-                        AudioSource audioSource = null;
+                        FungusAudioSource audioSource = null;
                         if (CheckParamCount(token.paramList, 1)) 
                         {
                             audioSource = FindAudio(token.paramList[0]);
@@ -726,7 +726,7 @@ namespace Fungus
             });
         }
         
-        protected virtual AudioSource FindAudio(string audioObjectName)
+        protected virtual FungusAudioSource FindAudio(string audioObjectName)
         {
             GameObject go = GameObject.Find(audioObjectName);
             if (go == null)
@@ -734,7 +734,7 @@ namespace Fungus
                 return null;
             }
             
-            return go.GetComponent<AudioSource>();
+            return go.GetComponent<FungusAudioSource>();
         }
 
         protected virtual void NotifyInput()
@@ -748,7 +748,7 @@ namespace Fungus
             }
         }
 
-        protected virtual void NotifyStart(AudioClip audioClip)
+        protected virtual void NotifyStart(FungusAudioClip audioClip)
         {
             WriterSignals.DoWriterState(this, WriterState.Start);
 
@@ -841,7 +841,7 @@ namespace Fungus
         /// <param name="waitForVO">Wait for the Voice over to complete before proceeding</param>
         /// <param name="audioClip">Audio clip to play when text starts writing.</param>
         /// <param name="onComplete">Callback to call when writing is finished.</param>
-        public virtual IEnumerator Write(string content, bool clear, bool waitForInput, bool stopAudio, bool waitForVO, AudioClip audioClip, Action onComplete)
+        public virtual IEnumerator Write(string content, bool clear, bool waitForInput, bool stopAudio, bool waitForVO, FungusAudioClip audioClip, Action onComplete)
         {
             if (clear)
             {

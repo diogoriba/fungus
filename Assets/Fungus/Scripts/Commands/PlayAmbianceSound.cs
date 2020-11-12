@@ -16,7 +16,7 @@ namespace Fungus
     {
         [Tooltip("Sound effect clip to play")]
         [SerializeField]
-        protected AudioClip soundClip;
+        protected FungusAudioClip soundClip;
 
         [Range(0, 1)]
         [Tooltip("Volume level of the sound effect")]
