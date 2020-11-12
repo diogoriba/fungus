@@ -7,11 +7,16 @@ public class UnityAudioClip : FungusAudioClip
 {
     [SerializeField] internal AudioClip unityAudioClip;
 
-    public UnityAudioClip(AudioClip audioClip)
+    public UnityAudioClip()
     {
-        this.unityAudioClip = audioClip;
     }
 
+    public UnityAudioClip(AudioClip audioClip)
+    {
+        unityAudioClip = audioClip;
+    }
+
+    public override string name { get => this.unityAudioClip.name; set => this.unityAudioClip.name = value; }
     public override float length => this.unityAudioClip.length;
 
     public override int samples => this.unityAudioClip.samples;

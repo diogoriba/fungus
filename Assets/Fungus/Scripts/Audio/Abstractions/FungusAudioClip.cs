@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Fungus
 {
-    public abstract class FungusAudioClip : UnityEngine.Object
+    [Serializable]
+    public abstract class FungusAudioClip
     {
+        public abstract string name { get; set; }
         public abstract float length { get; }
         public abstract int samples { get; }
         public abstract int channels { get; }

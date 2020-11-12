@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
@@ -21,6 +23,8 @@ namespace Fungus
 
             public static bool hideMushroomInHierarchy;
             public static bool useLegacyMenus;
+            private static Type[] audioSourceTypeCache;
+            private static int selectedAudioSourceType;
 
             static FungusEditorPreferences()
             {
@@ -60,6 +64,25 @@ namespace Fungus
                 // Preferences GUI
                 hideMushroomInHierarchy = EditorGUILayout.Toggle("Hide Mushroom Flowchart Icon", hideMushroomInHierarchy);
                 useLegacyMenus = EditorGUILayout.Toggle(new GUIContent("Legacy Menus", "Force Legacy menus for Event, Add Variable and Add Command menus"), useLegacyMenus);
+
+                if (audioSourceTypeCache == null)
+                {
+                    UpdateAudioSourceTypeCache();
+                    var persistedAudioSourceFQN = FungusSettings.Instance.audioSourceTypeFQN;
+                    selectedAudioSourceType = audioSourceTypeCache.ToList().FindIndex(type => type.AssemblyQualifiedName == persistedAudioSourceFQN);
+                }
+
+                EditorGUI.BeginChangeCheck();
+                selectedAudioSourceType = EditorGUILayout.Popup("Default Audio Source Type", selectedAudioSourceType, audioSourceTypeCache?.Select(type => type?.AssemblyQualifiedName).ToArray());
+                if (GUILayout.Button("Update Audio Source Type List"))
+                {
+                    UpdateAudioSourceTypeCache();
+                }
+                if (EditorGUI.EndChangeCheck())
+                {
+                    FungusSettings.Instance.audioSourceTypeFQN = audioSourceTypeCache[selectedAudioSourceType].AssemblyQualifiedName;
+                    EditorUtility.SetDirty(FungusSettings.Instance);
+                }
 
                 EditorGUILayout.Space();
                 //ideally if any are null, but typically it is all or nothing that have broken links due to version changes or moving files external to Unity
@@ -111,6 +134,14 @@ namespace Fungus
                     EditorPrefs.SetBool(HIDE_MUSH_KEY, hideMushroomInHierarchy);
                     EditorPrefs.SetBool(USE_LEGACY_MENUS, useLegacyMenus);
                 }
+            }
+
+            private static void UpdateAudioSourceTypeCache()
+            {
+                audioSourceTypeCache = TypeCache.GetTypesDerivedFrom(typeof(FungusAudioSource)).Where(type =>
+                {
+                    return type.IsClass && type.GetConstructor(Type.EmptyTypes) != null && !type.IsAbstract;
+                }).ToArray();
             }
 
             public static void LoadOnScriptLoad()

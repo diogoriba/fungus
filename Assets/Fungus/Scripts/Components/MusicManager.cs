@@ -20,7 +20,7 @@ namespace Fungus
         {
             int audioSourceCount = this.GetComponents<FungusAudioSource>().Length;
             for (int i = 0; i < 3 - audioSourceCount; i++)
-                gameObject.AddComponent<FungusAudioSource>();
+                gameObject.AddComponent(FungusSettings.Instance.DefaultAudioSourceType);
 
         }
 

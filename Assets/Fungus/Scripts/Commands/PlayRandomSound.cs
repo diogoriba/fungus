@@ -15,7 +15,8 @@ namespace Fungus
     public class PlayRandomSound : Command
     {
         [Tooltip("Sound effect clip to play")]
-        [SerializeField]
+        [SerializeReference]
+        [SerializeReferenceButton]
         protected FungusAudioClip[] soundClip;
 
         [Range(0, 1)]

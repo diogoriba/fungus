@@ -1,41 +1,61 @@
 ﻿using Fungus;
+using System;
 using UnityEngine;
 
+[Serializable]
+[RequireComponent(typeof(AudioSource))]
 public class UnityAudioSource : FungusAudioSource
 {
-    [SerializeField] internal AudioSource unityAudioSource;
-    
-    private UnityAudioClip unityAudioClip;
+    protected AudioSource audioSource;
+    protected UnityAudioClip unityAudioClip;
 
-    private UnityAudioClip GetClip()
+    protected AudioSource AudioSource
     {
-        if ((unityAudioClip != null && unityAudioSource.clip) || (unityAudioClip.unityAudioClip != unityAudioSource.clip))
+        get
         {
-            unityAudioClip = new UnityAudioClip(unityAudioSource.clip);
+            if (audioSource == null)
+            {
+                audioSource = GetComponent<AudioSource>();
+            }
+            return audioSource;
         }
-        return unityAudioClip;
     }
 
-    public override FungusAudioClip clip { get => GetClip(); set { unityAudioClip = (UnityAudioClip)value; unityAudioSource.clip = unityAudioClip.unityAudioClip; } }
-    public override bool loop { get => unityAudioSource.loop; set => unityAudioSource.loop = value; }
-    public override float time { get => unityAudioSource.time; set => unityAudioSource.time = value; }
-    public override float volume { get => unityAudioSource.volume; set => unityAudioSource.volume = value; }
-    public override bool playOnAwake { get => unityAudioSource.playOnAwake; set => unityAudioSource.playOnAwake = value; }
-    public override float pitch { get => unityAudioSource.pitch; set => unityAudioSource.pitch = value; }
+    public override FungusAudioClip clip 
+    {
+        get
+        {
+            if (unityAudioClip == null || unityAudioClip.unityAudioClip != AudioSource.clip)
+            {
+                unityAudioClip = new UnityAudioClip(AudioSource.clip);
+            }
+            return unityAudioClip;
+        }
+        set 
+        { 
+            unityAudioClip = (UnityAudioClip)value; 
+            AudioSource.clip = unityAudioClip?.unityAudioClip; 
+        } 
+    }
+    public override bool loop { get => AudioSource.loop; set => AudioSource.loop = value; }
+    public override float time { get => AudioSource.time; set => AudioSource.time = value; }
+    public override float volume { get => AudioSource.volume; set => AudioSource.volume = value; }
+    public override bool playOnAwake { get => AudioSource.playOnAwake; set => AudioSource.playOnAwake = value; }
+    public override float pitch { get => AudioSource.pitch; set => AudioSource.pitch = value; }
 
-    public override bool isPlaying => unityAudioSource.isPlaying;
+    public override bool isPlaying => AudioSource.isPlaying;
 
-    public override float minDistance { get => unityAudioSource.minDistance; set => unityAudioSource.minDistance = value; }
-    public override int priority { get => unityAudioSource.priority; set => unityAudioSource.priority = value; }
+    public override float minDistance { get => AudioSource.minDistance; set => AudioSource.minDistance = value; }
+    public override int priority { get => AudioSource.priority; set => AudioSource.priority = value; }
 
     public override void Pause()
     {
-        unityAudioSource.Pause();
+        AudioSource.Pause();
     }
 
     public override void Play()
     {
-        unityAudioSource.Play();
+        AudioSource.Play();
     }
 
     public override void PlayClipAtPoint(FungusAudioClip clip, Vector3 position, float volume = 1)
@@ -47,11 +67,11 @@ public class UnityAudioSource : FungusAudioSource
     public override void PlayOneShot(FungusAudioClip clip, float volume = 1)
     {
         var clipToPlay = (UnityAudioClip)clip;
-        unityAudioSource.PlayOneShot(clipToPlay.unityAudioClip, volume);
+        AudioSource.PlayOneShot(clipToPlay.unityAudioClip, volume);
     }
 
     public override void Stop()
     {
-        unityAudioSource.Stop();
+        AudioSource.Stop();
     }
 }

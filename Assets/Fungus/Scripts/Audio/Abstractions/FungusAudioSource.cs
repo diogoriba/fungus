@@ -7,6 +7,7 @@ using UnityEngine;
 
 namespace Fungus
 {
+    [Serializable]
     public abstract class FungusAudioSource : MonoBehaviour
     {
         public abstract FungusAudioClip clip { get; set; }

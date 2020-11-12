@@ -15,7 +15,7 @@ namespace Fungus
     public class PlaySound : Command
     {
         [Tooltip("Sound effect clip to play")]
-        [SerializeField] protected FungusAudioClip soundClip;
+        [SerializeReference] [SerializeReferenceButton] protected FungusAudioClip soundClip;
 
         [Range(0,1)]
         [Tooltip("Volume level of the sound effect")]

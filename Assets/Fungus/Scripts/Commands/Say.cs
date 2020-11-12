@@ -28,7 +28,7 @@ namespace Fungus
         [SerializeField] protected Sprite portrait;
 
         [Tooltip("Voiceover audio to play when writing the text")]
-        [SerializeField] protected FungusAudioClip voiceOverClip;
+        [SerializeReference] [SerializeReferenceButton] protected FungusAudioClip voiceOverClip;
 
         [Tooltip("Always show this Say text when the command is executed multiple times")]
         [SerializeField] protected bool showAlways = true;

@@ -37,13 +37,13 @@ namespace Fungus
         [SerializeField] protected AudioMode audioMode = AudioMode.Beeps;
 
         [Tooltip("List of beeps to randomly select when playing beep sound effects. Will play maximum of one beep per character, with only one beep playing at a time.")]
-        [SerializeField] protected List<FungusAudioClip> beepSounds = new List<FungusAudioClip>();
+        [SerializeReference] [SerializeReferenceButton] protected List<FungusAudioClip> beepSounds = new List<FungusAudioClip>();
 
         [Tooltip("Long playing sound effect to play when writing text")]
-        [SerializeField] protected FungusAudioClip soundEffect;
+        [SerializeReference] [SerializeReferenceButton] protected FungusAudioClip soundEffect;
 
         [Tooltip("Sound effect to play on user input (e.g. a click)")]
-        [SerializeField] protected FungusAudioClip inputSound;
+        [SerializeReference] [SerializeReferenceButton] protected FungusAudioClip inputSound;
 
         protected float targetVolume = 0f;
 
@@ -84,7 +84,7 @@ namespace Fungus
                 targetAudioSource = GetComponent<FungusAudioSource>();
                 if (targetAudioSource == null)
                 {
-                    targetAudioSource = gameObject.AddComponent<FungusAudioSource>();
+                    targetAudioSource = (FungusAudioSource)gameObject.AddComponent(FungusSettings.Instance.DefaultAudioSourceType);
                 }
             }
 
