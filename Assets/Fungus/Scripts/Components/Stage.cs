@@ -23,6 +23,9 @@ namespace Fungus
         [Tooltip("Choose a dimColor")]
         [SerializeField] protected Color dimColor =new Color(0.5f, 0.5f, 0.5f, 1f);
 
+        [Tooltip("Scale modifier that is applied when character is active")]
+        [SerializeField] protected float scaleFactorWhenActive = 1f;
+
         [Tooltip("Duration for fading character portraits in / out.")]
         [SerializeField] protected float fadeDuration = 0.5f;
 
@@ -44,6 +47,11 @@ namespace Fungus
         protected List<Character> charactersOnStage = new List<Character>();
 
         protected static List<Stage> activeStages = new List<Stage>();
+
+        public float ScaleFactorWhenActive
+        {
+            get { return scaleFactorWhenActive; }
+        }
 
         protected virtual void OnEnable()
         {

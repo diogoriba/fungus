@@ -233,23 +233,24 @@ namespace Fungus
         protected virtual void SetupPortrait(PortraitOptions options)
         {
             SetRectTransform(options.character.State.portraitImage.rectTransform, options.fromPosition);
+            float scaleFactor = options.character.State.dimmed ? 1f : stage.ScaleFactorWhenActive;
 
             if (options.character.State.facing != options.character.PortraitsFace)
             {
-                options.character.State.portraitImage.rectTransform.localScale = new Vector3(-1f, 1f, 1f);
+                options.character.State.portraitImage.rectTransform.localScale = new Vector3(-1f, 1f, 1f) * scaleFactor;
             }
             else
             {
-                options.character.State.portraitImage.rectTransform.localScale = new Vector3(1f, 1f, 1f);
+                options.character.State.portraitImage.rectTransform.localScale = new Vector3(1f, 1f, 1f) * scaleFactor;
             }
 
             if (options.facing != options.character.PortraitsFace)
             {
-                options.character.State.portraitImage.rectTransform.localScale = new Vector3(-1f, 1f, 1f);
+                options.character.State.portraitImage.rectTransform.localScale = new Vector3(-1f, 1f, 1f) * scaleFactor;
             }
             else
             {
-                options.character.State.portraitImage.rectTransform.localScale = new Vector3(1f, 1f, 1f);
+                options.character.State.portraitImage.rectTransform.localScale = new Vector3(1f, 1f, 1f) * scaleFactor;
             }
         }
 
@@ -609,8 +610,12 @@ namespace Fungus
 
             // LeanTween doesn't handle 0 duration properly
             float duration = (stage.FadeDuration > 0f) ? stage.FadeDuration : float.Epsilon;
-
             LeanTween.color(character.State.portraitImage.rectTransform, targetColor, duration).setEase(stage.FadeEaseType).setRecursive(false);
+
+            float scaleFactor = dimmedState ? 1f : stage.ScaleFactorWhenActive;
+            var normalizedScale = character.State.portraitImage.rectTransform.localScale;
+            normalizedScale = new Vector3(Mathf.Sign(normalizedScale.x), Mathf.Sign(normalizedScale.y), Mathf.Sign(normalizedScale.z));
+            LeanTween.scale(character.State.portraitImage.rectTransform, normalizedScale * scaleFactor, duration).setRecursive(false);
         }
 
         #endregion
